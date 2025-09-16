@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-center align-items-start min-vh-50 bg-body-tertiary py-4 rounded-4 shadow-sm">
+	<div class="container p-4 bg-white rounded-3 shadow-sm" style="max-width: 700px;">
+		<h1 class="text-center mb-4 fw-semibold">Sistema de proveedores</h1>
+		<!-- Tabla minimalista de proveedores -->
+		<div class="table-responsive">
+			<table class="table table-hover align-middle mb-0 border rounded-3 overflow-hidden">
+				<thead class="table-light">
+					<tr>
+						<th scope="col" class="w-20">#</th>
+						<th scope="col" class="w-20">Nombre</th>
+						<th scope="col" class="w-20">Teléfono</th>
+						<th scope="col" class="w-20">Correo</th>
+						<th scope="col" class="w-20 text-center">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let proveedor of proveedores; let i = index">
+						<th scope="row" class="w-20">{{ i + 1 }}</th>
+						<td class="w-20">{{ proveedor.nombreProveedor }}</td>
+						<td class="w-20">{{ proveedor.telefono }}</td>
+						<td class="w-20">{{ proveedor.correo }}</td>
+						<td class="w-20 text-center d-flex gap-2 justify-content-center">
+							<button class="btn btn-sm btn-primary" (click)="editarProveedor(proveedor.idProveedor)">Editar</button>
+							<button class="btn btn-sm btn-success" (click)="obtenerProductosPorProovedor(proveedor.idProveedor)">Productos</button>
+							<button class="btn btn-sm btn-danger" (click)="eliminarProveedor(proveedor.idProveedor)">Eliminar</button>
+						</td>
+					</tr>
+					<tr *ngIf="!proveedores || proveedores.length === 0">
+						<td colspan="5" class="text-center text-muted">No hay proveedores registrados.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
