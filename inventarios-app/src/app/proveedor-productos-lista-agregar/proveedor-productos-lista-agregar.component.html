@@ -1,0 +1,28 @@
+<!-- Formulario para agregar producto a la lista de un proveedor -->
+<div class="d-flex justify-content-center align-items-start min-vh-50 bg-body-tertiary py-4 rounded-4 shadow-sm">
+	<div class="container p-4 bg-white rounded-3 shadow-sm" style="max-width: 420px;">
+		<h2 class="text-center mb-4 fw-semibold text-dark">Agregar producto a proveedor</h2>
+		<form (ngSubmit)="ngOnSubmit()">
+			<div class="mb-3">
+				<label class="form-label text-dark">Proveedor</label>
+			<input type="text" class="form-control" [value]="proveedor.nombreProveedor || ''" disabled>
+			</div>
+			<div class="mb-3">
+				<label for="descripcion" class="form-label text-dark">Descripción</label>
+				<input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="producto.descripcion" placeholder="Descripción del producto" required>
+			</div>
+			<div class="mb-3">
+				<label for="precio" class="form-label text-dark">Precio</label>
+				<input type="number" class="form-control" id="precio" name="precio" [(ngModel)]="producto.precio" placeholder="Precio" required min="0" step="0.01">
+			</div>
+			<div class="mb-3">
+				<label for="existencia" class="form-label text-dark">Existencia</label>
+				<input type="number" class="form-control" id="existencia" name="existencia" [(ngModel)]="producto.existencia" placeholder="Existencia" required min="0" step="1">
+			</div>
+			<div class="d-flex gap-2 mt-3">
+				<button type="submit" class="btn btn-dark flex-fill">Guardar</button>
+			<a class="btn btn-outline-dark flex-fill" [routerLink]="['/productos/proveedor', proveedor.idProveedor]">Volver</a>
+			</div>
+		</form>
+	</div>
+</div>

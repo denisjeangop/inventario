@@ -1,26 +1,33 @@
 
 <div class="container py-4">
-	<h2 class="mb-4 text-center">Productos del proveedor</h2>
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<h2 class="mb-0">Productos del proveedor</h2>
+		<button class="btn btn-success" (click)="agregarProducto()">Agregar producto</button>
+	</div>
 	<div class="table-responsive">
 		<table class="table table-hover align-middle mb-0 border rounded-3 overflow-hidden">
 			<thead class="table-light">
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Producto</th>
-					<th scope="col">Precio</th>
-					<th scope="col">Existencia</th>
-				</tr>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Producto</th>
+						<th scope="col">Precio</th>
+						<th scope="col">Existencia</th>
+						<th scope="col" class="text-center">Acciones</th>
+					</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let producto of productos; let i = index">
-					<th scope="row">{{ i + 1 }}</th>
-					<td>{{ producto.descripcion }}</td>
-					<td>{{ producto.precio }}</td>
-					<td>{{ producto.existencia }}</td>
-				</tr>
-				<tr *ngIf="!productos || productos.length === 0">
-					<td colspan="4" class="text-center text-muted">Este proveedor actualmente no está supliendole productos</td>
-				</tr>
+					<tr *ngFor="let producto of productos; let i = index">
+						<th scope="row">{{ i + 1 }}</th>
+						<td>{{ producto.descripcion }}</td>
+						<td>{{ producto.precio }}</td>
+						<td>{{ producto.existencia }}</td>
+						<td class="text-center">
+							
+						</td>
+					</tr>
+					<tr *ngIf="!productos || productos.length === 0">
+						<td colspan="5" class="text-center text-muted">Este proveedor actualmente no está supliendole productos</td>
+					</tr>
 			</tbody>
 		</table>
 	</div>

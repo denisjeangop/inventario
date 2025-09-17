@@ -12,18 +12,20 @@ import { CommonModule } from "@angular/common";
 })
 export class ProveedorProductosListaComponent {
     productos!: Producto[];
+    idProveedor!: number;
 
     private proveedorService = inject(ProveedorService);
     private enrutador = inject(Router);
     private ruta = inject(ActivatedRoute);
 
     ngOnInit() {
+        this.idProveedor = this.ruta.snapshot.params['id'];
         this.obtenerProductosPorProveedor();
     }
 
     private obtenerProductosPorProveedor(): void {
         const idProveedor = this.ruta.snapshot.params['id'];
-        this.proveedorService.obtenerProductosPorProveedor(idProveedor).subscribe({
+            this.proveedorService.obtenerProductosPorProveedor(this.idProveedor).subscribe({
             next: (datos) => {
                 console.log('Productos recibidos:', datos);
                 this.productos = datos;
@@ -33,5 +35,10 @@ export class ProveedorProductosListaComponent {
             }
         });
     }
+
+        agregarProducto() {
+            this.enrutador.navigate(['/productos/agregar', this.idProveedor]);
+        }
+
 
 }

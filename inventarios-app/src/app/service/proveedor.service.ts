@@ -33,4 +33,8 @@ export class ProveedorService {
     eliminarProveedor(id: number): Observable<void> {
         return this.clienteHttp.delete<void>(`${this.urlBase}/proveedores/${id}`);
     }
+
+    crearProducto(producto: Producto): Observable<Object> {
+        return this.clienteHttp.post<Producto>(`${this.urlBase}/productos`, producto);
+    }
 }
