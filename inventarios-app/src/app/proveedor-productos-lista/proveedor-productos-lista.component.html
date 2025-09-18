@@ -15,20 +15,30 @@
 						<th scope="col" class="text-center">Acciones</th>
 					</tr>
 			</thead>
-			<tbody>
-					<tr *ngFor="let producto of productos; let i = index">
-						<th scope="row">{{ i + 1 }}</th>
-						<td>{{ producto.descripcion }}</td>
-						<td>{{ producto.precio }}</td>
-						<td>{{ producto.existencia }}</td>
-						<td class="text-center">
-							
-						</td>
-					</tr>
-					<tr *ngIf="!productos || productos.length === 0">
-						<td colspan="5" class="text-center text-muted">Este proveedor actualmente no está supliendole productos</td>
-					</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
+						<tbody>
+							<tr *ngFor="let producto of productos; let i = index">
+								<th scope="row">{{ i + 1 }}</th>
+								<td>{{ producto.descripcion }}</td>
+								<td>{{ producto.precio }}</td>
+								<td>{{ producto.existencia }}</td>
+								<td class="text-center">
+									<button class="btn btn-danger btn-sm" (click)="pedirConfirmacionEliminar(producto.idProducto)">Eliminar</button>
+								</td>
+							</tr>
+							<tr *ngIf="!productos || productos.length === 0">
+								<td colspan="5" class="text-center text-muted">Este proveedor actualmente no está supliendole productos</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			<app-confirm-dialog
+				*ngIf="showConfirm"
+				[title]="'Confirmar eliminación'"
+				[message]="'¿Está seguro de que desea eliminar el producto?'"
+				[confirmText]="'Eliminar'"
+				[cancelText]="'Cancelar'"
+				(confirm)="confirmarEliminar()"
+				(cancel)="cancelarEliminar()">
+			</app-confirm-dialog>
+			</div>

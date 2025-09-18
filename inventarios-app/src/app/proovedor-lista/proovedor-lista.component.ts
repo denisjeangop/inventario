@@ -1,5 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { Proveedor } from "../model/proveedor.model";
 import { ProveedorService } from "../service/proveedor.service";
 import { Router } from "@angular/router";
@@ -7,11 +8,14 @@ import { Router } from "@angular/router";
 @Component({
     selector: "proovedor-lista",
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, ConfirmDialogComponent],
     templateUrl: "./proovedor-lista.component.html"
 })
 export class ProovedorListaComponent {
     proveedores!: Proveedor[];
+
+    showConfirm = false;
+    proveedorAEliminar: number | null = null;
 
     private proveedorService = inject(ProveedorService);
     private enrutador = inject(Router);
@@ -20,7 +24,7 @@ export class ProovedorListaComponent {
         this.obtenerProveedores();
     }
 
-    private obtenerProveedores(): void{
+    private obtenerProveedores(): void {
         this.proveedorService.obtenerListaProveedores().subscribe({
             next: (datos) => {
                 this.proveedores = datos;
@@ -31,8 +35,7 @@ export class ProovedorListaComponent {
         });
     }
 
-
-    editarProveedor(id: number){
+    editarProveedor(id: number) {
         this.enrutador.navigate(['/proveedores/editar', id]);
     }
 
@@ -40,16 +43,30 @@ export class ProovedorListaComponent {
         this.enrutador.navigate(['/productos/proveedor', id]);
     }
 
-    eliminarProveedor(id: number) {
-        this.proveedorService.eliminarProveedor(id).subscribe({
-            next: () => {
-                console.log('Proveedor eliminado con éxito');
-                this.obtenerProveedores(); // Refrescar la lista después de eliminar
-            },
-            error: (error) => {
-                console.error('Error al eliminar el proveedor:', error);
-            }
-        });
+    pedirConfirmacionEliminar(id: number) {
+        this.proveedorAEliminar = id;
+        this.showConfirm = true;
     }
 
+    confirmarEliminar() {
+        if (this.proveedorAEliminar != null) {
+            this.proveedorService.eliminarProveedor(this.proveedorAEliminar).subscribe({
+                next: () => {
+                    console.log('Proveedor eliminado con éxito');
+                    this.obtenerProveedores();
+                    this.showConfirm = false;
+                    this.proveedorAEliminar = null;
+                },
+                error: (error) => {
+                    console.error('Error al eliminar el proveedor:', error);
+                    this.showConfirm = false;
+                }
+            });
+        }
+    }
+
+    cancelarEliminar() {
+        this.showConfirm = false;
+        this.proveedorAEliminar = null;
+    }
 }
